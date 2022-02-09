@@ -1,0 +1,50 @@
+<% @page_title = '試合結果一覧' %>
+<h1><%= @page_title %></h1>
+
+<%= search_form_for @q, url: search_results_path do |f| %>
+  <%= f.label :player1_name_cont, "プレイヤー1" %>
+  <%= f.search_field :player1_name_or_player2_name_cont %>
+  <%= f.label :player1_name_cont, "プレイヤー2" %>
+  <%= f.search_field :player2_name_or_player1_name_cont %>
+  <br>
+  <%= f.label :player1_name_cont, "チーム1" %>
+  <%= f.search_field :player1_team_or_player2_team_cont %>
+  <%= f.label :player1_name_cont, "チーム2" %>
+  <%= f.search_field :player2_team_or_player1_team_cont %>
+  <br><br>
+  <%= f.submit "検索" %>
+<% end %>
+
+<% if @results.present? %>
+  <table class='list' border="1">
+    <thead>
+      <tr>
+        <th>試合時間</th>
+        <th>プレイヤー1</th>
+        <th>チーム名1</th>
+        <th>スコア</th>
+        <th>プレイヤー2</th>
+        <th>チーム名2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @results.each do |result| %>
+        <tr>
+          <td><%= l result.match_date %></td>
+          <td><%= result.player1_name %></td>
+          <td><%= result.player1_team %></td>
+          <td><%= result.player1_fulltime_score %>-<%= result.player2_fulltime_score %>(<%= result.player1_halftime_score %>-<%= result.player2_halftime_score %>)</td>
+          <td><%= result.player2_name %></td>
+          <td><%= result.player2_team %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @results %>
+<% else %>
+  <p>対象データがありません。</p>
+<% end %>
+
+<%= link_to :root do %>
+  <button>戻る</button>
+<% end %>

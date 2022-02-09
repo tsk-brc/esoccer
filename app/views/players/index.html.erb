@@ -1,0 +1,23 @@
+<% @page_title = '選手名鑑' %>
+<h1><%= @page_title %></h1>
+<%= link_to :root do %>
+  <button>戻る</button>
+<% end %>
+
+<%
+files = Dir.glob("#{Rails.root}/app/assets/images/*.png")
+files.each do |file|
+%>
+  <table border="0" align="left">
+    <tr>
+      <td>
+        <%= image_tag File.basename(file), :width => '200', :height => '200' %>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <%= link_to File.basename(file, '.*'), player_path(player1_name: File.basename(file, '.*')) %>
+      </td>
+    </tr>
+  </table>
+<% end %>
