@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_202_075_605) do
+ActiveRecord::Schema.define(version: 20_220_210_085_228) do
   create_table 'results', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.datetime 'match_date', precision: 6, null: false
     t.string 'player1_name', null: false
@@ -29,5 +29,18 @@ ActiveRecord::Schema.define(version: 20_220_202_075_605) do
     t.integer 'player1_season_match_number', null: false
     t.integer 'player2_season_number', null: false
     t.integer 'player2_season_match_number', null: false
+  end
+
+  create_table 'tournaments', primary_key: %w[cup_name season_number], charset: 'utf8mb4',
+                              collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'cup_name', null: false
+    t.integer 'season_number', default: 0, null: false
+    t.integer 'rank', null: false
+    t.string 'player_name', null: false
+    t.integer 'got_goals', null: false
+    t.integer 'gave_goals', null: false
+    t.integer 'points', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 end
