@@ -23,4 +23,62 @@
 #
 
 class Result < ApplicationRecord
+  scope :player1_won_count, lambda { |player_name|
+    where('player1_name = ? AND player1_fulltime_score > player2_fulltime_score', player_name)
+  }
+  scope :player2_won_count, lambda { |player_name|
+    where('player2_name = ? AND player2_fulltime_score > player1_fulltime_score', player_name)
+  }
+  scope :player1_lost_count, lambda { |player_name|
+    where('player1_name = ? AND player1_fulltime_score < player2_fulltime_score', player_name)
+  }
+  scope :player2_lost_count, lambda { |player_name|
+    where('player2_name = ? AND player2_fulltime_score < player1_fulltime_score', player_name)
+  }
+  scope :player1_drew_count, lambda { |player_name|
+    where('player1_name = ? AND player1_fulltime_score = player2_fulltime_score', player_name)
+  }
+  scope :player2_drew_count, lambda { |player_name|
+    where('player2_name = ? AND player2_fulltime_score = player1_fulltime_score', player_name)
+  }
+  scope :season_player1_won_count, lambda { |player_name, season_number, season_match_number|
+    where('player1_name = ? AND player1_season_number = ? AND player1_season_match_number = ? AND
+        player1_fulltime_score > player2_fulltime_score', player_name, season_number, season_match_number)
+  }
+  scope :season_player2_won_count, lambda { |player_name, season_number, season_match_number|
+    where('player2_name = ? AND player2_season_number = ? AND player2_season_match_number = ? AND
+        player1_fulltime_score < player2_fulltime_score', player_name, season_number, season_match_number)
+  }
+  scope :season_player1_lost_count, lambda { |player_name, season_number, season_match_number|
+    where('player1_name = ? AND player1_season_number = ? AND player1_season_match_number = ? AND
+        player1_fulltime_score < player2_fulltime_score', player_name, season_number, season_match_number)
+  }
+  scope :season_player2_lost_count, lambda { |player_name, season_number, season_match_number|
+    where('player2_name = ? AND player2_season_number = ? AND player2_season_match_number = ? AND
+        player1_fulltime_score > player2_fulltime_score', player_name, season_number, season_match_number)
+  }
+  scope :season_player1_drew_count, lambda { |player_name, season_number, season_match_number|
+    where('player1_name = ? AND player1_season_number = ? AND player1_season_match_number = ? AND
+        player1_fulltime_score = player2_fulltime_score', player_name, season_number, season_match_number)
+  }
+  scope :season_player2_drew_count, lambda { |player_name, season_number, season_match_number|
+    where('player2_name = ? AND player2_season_number = ? AND player2_season_match_number = ? AND
+        player1_fulltime_score = player2_fulltime_score', player_name, season_number, season_match_number)
+  }
+  scope :player1_got_goals_matches_count, lambda { |player_name, season_number, season_match_number|
+    where('player1_name = ? AND player1_season_number = ? AND player1_season_match_number = ? AND
+        player1_fulltime_score > 0', player_name, season_number, season_match_number)
+  }
+  scope :player2_got_goals_matches_count, lambda { |player_name, season_number, season_match_number|
+    where('player2_name = ? AND player2_season_number = ? AND player2_season_match_number = ? AND
+        player2_fulltime_score > 0', player_name, season_number, season_match_number)
+  }
+  scope :player1_gave_goals_matches_count, lambda { |player_name, season_number, season_match_number|
+    where('player1_name = ? AND player1_season_number = ? AND player1_season_match_number = ? AND
+        player2_fulltime_score > 0', player_name, season_number, season_match_number)
+  }
+  scope :player2_gave_goals_matches_count, lambda { |player_name, season_number, season_match_number|
+    where('player2_name = ? AND player2_season_number = ? AND player2_season_match_number = ? AND
+        player1_fulltime_score > 0', player_name, season_number, season_match_number)
+  }
 end
