@@ -31,10 +31,26 @@
       <% @results.each do |result| %>
         <tr>
           <td><%= l result.match_date %></td>
-          <td><%= result.player1_name %></td>
+          <td>
+            <% if result.player1_fulltime_score.zero? %>
+              <font color=red>
+                <%= result.player1_name %>
+              </font>
+            <% else %>
+              <%= result.player1_name %>
+            <% end %>
+          </td>
           <td><%= result.player1_team %></td>
           <td><%= result.player1_fulltime_score %>-<%= result.player2_fulltime_score %>(<%= result.player1_halftime_score %>-<%= result.player2_halftime_score %>)</td>
-          <td><%= result.player2_name %></td>
+          <td>
+            <% if result.player2_fulltime_score.zero? %>
+              <font color=red>
+                <%= result.player2_name %>
+              </font>
+            <% else %>
+              <%= result.player2_name %>
+            <% end %>
+          </td>
           <td><%= result.player2_team %></td>
         </tr>
       <% end %>
