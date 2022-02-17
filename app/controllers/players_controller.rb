@@ -60,17 +60,17 @@ class PlayersController < ApplicationController
                                                                                  num).sum(:player1_fulltime_score) +
           Result.player2_got_goals_matches_count(params[:player1_name], 1,
                                                  num).sum(:player2_fulltime_score)).to_f / season1_total_match).round(2)
-        @season1_gave_goals_per_match << ((Result.where(player1_name: params[:player1_name], player1_season_number: 1,
-                                                        player1_season_match_number: num).sum(:player2_fulltime_score) +
-          Result.where(player2_name: params[:player1_name], player2_season_number: 1, player2_season_match_number: num)
-            .sum(:player1_fulltime_score)).to_f / season1_total_match).round(2)
+        @season1_gave_goals_per_match << ((Result.player1_gave_goals_matches_count(params[:player1_name], 1,
+                                                                                   num).sum(:player2_fulltime_score) +
+          Result.player2_gave_goals_matches_count(params[:player1_name], 1, num)
+          .sum(:player1_fulltime_score)).to_f / season2_total_match).round(2)
         @season1_got_goals_percentage << ((Result.player1_got_goals_matches_count(params[:player1_name], 1, num).count +
-        Result.player2_got_goals_matches_count(params[:player1_name], 1,
-                                               num).count).to_f / season1_total_match * 100.0).round(2)
+          Result.player2_got_goals_matches_count(params[:player1_name], 1,
+                                                 num).count).to_f / season1_total_match * 100.0).round(2)
         @season1_gave_goals_percentage << ((Result.player1_gave_goals_matches_count(params[:player1_name], 1,
                                                                                     num).count +
-        Result.player2_gave_goals_matches_count(params[:player1_name], 1,
-                                                num).count).to_f / season1_total_match * 100.0).round(2)
+          Result.player2_gave_goals_matches_count(params[:player1_name], 1,
+                                                  num).count).to_f / season1_total_match * 100.0).round(2)
       else
         @season1_won_rate << 0
         @season1_double_chance_rate << 0
@@ -107,24 +107,21 @@ class PlayersController < ApplicationController
         @season2_won_rate << ((@season2_won_count[num - 1].to_f / season2_total_match) * 100.0).round(2)
         @season2_double_chance_rate << (((@season2_won_count[num - 1] +
           @season2_drew_count[num - 1]).to_f / season2_total_match) * 100.0).round(2)
-        @season2_got_goals_per_match << ((Result.where(player1_name: params[:player1_name], player1_season_number: 2,
-                                                       player1_season_match_number: num).sum(:player1_fulltime_score) +
-          Result.where(player2_name: params[:player1_name], player2_season_number: 2,
-                       player2_season_match_number: num)
-                       .sum(:player2_fulltime_score)).to_f / season2_total_match).round(2)
-        @season2_gave_goals_per_match << ((Result.where(player1_name: params[:player1_name], player1_season_number: 2,
-                                                        player1_season_match_number: num).sum(:player2_fulltime_score) +
-          Result.where(player2_name: params[:player1_name], player2_season_number: 2,
-                       player2_season_match_number: num)
-                       .sum(:player1_fulltime_score)).to_f / season2_total_match).round(2)
+        @season2_got_goals_per_match << ((Result.player1_got_goals_matches_count(params[:player1_name], 2,
+                                                                                 num).sum(:player1_fulltime_score) +
+          Result.player2_got_goals_matches_count(params[:player1_name], 2, num)
+          .sum(:player2_fulltime_score)).to_f / season2_total_match).round(2)
+        @season2_gave_goals_per_match << ((Result.player1_gave_goals_matches_count(params[:player1_name], 2,
+                                                                                   num).sum(:player2_fulltime_score) +
+          Result.player2_gave_goals_matches_count(params[:player1_name],
+                                                  2, num).sum(:player1_fulltime_score)).to_f / season2_total_match).round(2)
         @season2_got_goals_percentage << ((Result.player1_got_goals_matches_count(params[:player1_name], 2, num).count +
-        Result.player2_got_goals_matches_count(params[:player1_name], 2,
-                                               num).count).to_f / season2_total_match * 100.0).round(2)
-
+          Result.player2_got_goals_matches_count(params[:player1_name], 2,
+                                                 num).count).to_f / season2_total_match * 100.0).round(2)
         @season2_gave_goals_percentage << ((Result.player1_gave_goals_matches_count(params[:player1_name], 2,
                                                                                     num).count +
-        Result.player2_gave_goals_matches_count(params[:player1_name], 2,
-                                                num).count).to_f / season2_total_match * 100.0).round(2)
+          Result.player2_gave_goals_matches_count(params[:player1_name], 2,
+                                                  num).count).to_f / season2_total_match * 100.0).round(2)
       else
         @season2_won_rate << 0
         @season2_double_chance_rate << 0
@@ -161,22 +158,20 @@ class PlayersController < ApplicationController
         @season3_won_rate << ((@season3_won_count[num - 1].to_f / season3_total_match) * 100.0).round(2)
         @season3_double_chance_rate << (((@season3_won_count[num - 1] +
           @season3_drew_count[num - 1]).to_f / season3_total_match) * 100.0).round(2)
-        @season3_got_goals_per_match << ((Result.where(player1_name: params[:player1_name], player1_season_number: 3,
-                                                       player1_season_match_number: num).sum(:player1_fulltime_score) +
-        Result.where(player2_name: params[:player1_name], player2_season_number: 3, player2_season_match_number: num)
-        .sum(:player2_fulltime_score)).to_f / season3_total_match).round(2)
-        @season3_gave_goals_per_match << ((Result.where(player1_name: params[:player1_name], player1_season_number: 3,
-                                                        player1_season_match_number: num).sum(:player2_fulltime_score) +
-          Result.where(player2_name: params[:player1_name], player2_season_number: 3,
-                       player2_season_match_number: num)
-                       .sum(:player1_fulltime_score)).to_f / season3_total_match).round(2)
-        @season3_got_goals_percentage << ((Result.player1_got_goals_matches_count(params[:player1_name], 3, num).count +
+        @season3_got_goals_per_match << ((Result.player1_got_goals_matches_count(params[:player1_name], 3,
+                                                                                 num).sum(:player1_fulltime_score) +
           Result.player2_got_goals_matches_count(params[:player1_name], 3,
-                                                 num).count).to_f / season3_total_match * 100.0).round(2)
+                                                 num).sum(:player2_fulltime_score)).to_f / season3_total_match).round(2)
+        @season3_gave_goals_per_match << ((Result.player1_gave_goals_matches_count(params[:player1_name], 3,
+                                                                                   num).sum(:player2_fulltime_score) +
+          Result.player2_gave_goals_matches_count(params[:player1_name], 3,
+                                                  num).sum(:player1_fulltime_score)).to_f / season3_total_match).round(2)
+        @season3_got_goals_percentage << ((Result.player1_got_goals_matches_count(params[:player1_name], 3,
+                                                                                  num).count + Result.player2_got_goals_matches_count(params[:player1_name], 3,
+                                                                                                                                      num).count).to_f / season3_total_match * 100.0).round(2)
         @season3_gave_goals_percentage << ((Result.player1_gave_goals_matches_count(params[:player1_name], 3,
-                                                                                    num).count +
-        Result.player2_gave_goals_matches_count(params[:player1_name], 3,
-                                                num).count).to_f / season3_total_match * 100.0).round(2)
+                                                                                    num).count + Result.player2_gave_goals_matches_count(params[:player1_name], 3,
+                                                                                                                                         num).count).to_f / season3_total_match * 100.0).round(2)
       else
         @season3_won_rate << 0
         @season3_double_chance_rate << 0
