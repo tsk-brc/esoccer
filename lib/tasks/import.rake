@@ -6,7 +6,7 @@ namespace :import do
   task result_data: :environment do
     puts 'データを取り込む日付を指定してください(例:20220101)'
     target_date = $stdin.gets.chomp!
-    path = File.join Rails.root, "db/csv/#{target_date}.csv"
+    path = File.join Rails.root, "db/csv/matches/#{target_date}.csv"
     list = []
     CSV.foreach(path, headers: true) do |row|
       list << {
