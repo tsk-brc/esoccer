@@ -31,5 +31,6 @@
 /config/master.key
 
 .DS_Store
-/db/csv/*
+/db/csv/matches/*.csv
+/db/csv/tournaments/*.csv
 /app/assets/images/*.png
