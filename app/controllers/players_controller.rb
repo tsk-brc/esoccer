@@ -63,7 +63,7 @@ class PlayersController < ApplicationController
         @season1_gave_goals_per_match << ((Result.player1_gave_goals_matches_count(params[:player1_name], 1,
                                                                                    num).sum(:player2_fulltime_score) +
           Result.player2_gave_goals_matches_count(params[:player1_name], 1, num)
-          .sum(:player1_fulltime_score)).to_f / season2_total_match).round(2)
+          .sum(:player1_fulltime_score)).to_f / season1_total_match).round(2)
         @season1_got_goals_percentage << ((Result.player1_got_goals_matches_count(params[:player1_name], 1, num).count +
           Result.player2_got_goals_matches_count(params[:player1_name], 1,
                                                  num).count).to_f / season1_total_match * 100.0).round(2)
