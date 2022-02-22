@@ -2,7 +2,7 @@
 
 namespace :insert do
   task season_number: :environment do
-    players = Dir.glob("#{Rails.root}/app/assets/images/*.png")
+    players = Tournament.distinct.pluck(:player_name)
     players.each do |player|
       player_name = File.basename(player, '.*')
       player_results = Result.where('(player1_season_number = 0 and player1_name = ?) or
