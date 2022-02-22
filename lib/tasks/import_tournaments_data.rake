@@ -14,6 +14,10 @@ namespace :import do
         season_number: row['season_number'],
         rank: row['rank'],
         player_name: row['player_name'],
+        team_name: row['team_name'],
+        wins: row['wins'],
+        draws: row['draws'],
+        losses: row['losses'],
         got_goals: row['got_goals'],
         gave_goals: row['gave_goals'],
         points: row['points']
